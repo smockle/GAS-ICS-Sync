@@ -359,7 +359,7 @@ function createEvent(event, calendarTz){
     newEvent.description = icalEvent.description;
 
   if (event.hasProperty('location'))
-    newEvent.location = icalEvent.location;
+    newEvent.location = icalEvent.location.replace(/\n/g, ", ");
 
   var validVisibilityValues = ["default", "public", "private", "confidential"];
   if ( validVisibilityValues.includes(overrideVisibility.toLowerCase()) ) {
