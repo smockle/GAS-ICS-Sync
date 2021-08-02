@@ -152,6 +152,16 @@ function parseResponses(responses){
     result = [].concat(allEvents, result);
   }
   
+  if (excludeTitles && excludeTitles.length > 0) {
+    result = result.filter(function(event){
+      try{
+        return !event.hasProperty('summary') || (event.hasProperty('summary') && !excludeTitles.includes(event.getFirstPropertyValue('summary').toString()))
+      }catch(e){
+        return true;
+      }
+    })
+  }
+  
   if (onlyFutureEvents){
     result = result.filter(function(event){
       try{
