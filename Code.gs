@@ -68,8 +68,8 @@ var excludeTitles = [];                // List of event titles (exact match) whi
 *           $$ DONATIONS $$
 *=========================================
 *
-* If you would like to donate and help Derek keep making awesome programs,
-* you can do that here: https://paypal.me/derekantrican
+* If you would like to donate and support the project,
+* you can do that here: https://www.paypal.me/jonasg0b1011001
 *
 *=========================================
 *             CONTRIBUTORS
