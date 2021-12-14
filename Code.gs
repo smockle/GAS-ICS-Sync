@@ -23,6 +23,8 @@
 
 var sourceCalendars = [                // The ics/ical urls that you want to get events from along with their target calendars (list a new row for each mapping of ICS url to Google Calendar)
                                        // For instance: ["https://www.calendarlabs.com/ical-calendar/ics/76/US_Holidays.ics", "US Holidays"]
+                                       // Or with colors following mapping https://developers.google.com/apps-script/reference/calendar/event-color, 
+                                       // for instance: ["https://www.calendarlabs.com/ical-calendar/ics/76/US_Holidays.ics", "US Holidays", "11"]
   ["icsUrl1", "targetCalendar1"],
   ["icsUrl2", "targetCalendar2"],
   ["icsUrl3", "targetCalendar1"]
@@ -152,6 +154,7 @@ function startSync(){
 
     targetCalendarName = calendar[0];
     var sourceCalendarURLs = calendar[1];
+    var colorId = calendar[2];
     var vevents;
 
     //------------------------ Fetch URL items ------------------------
@@ -159,9 +162,9 @@ function startSync(){
     Logger.log("Syncing " + responses.length + " calendars to " + targetCalendarName);
     
     //------------------------ Get target calendar information------------------------
-    var targetCalendar = setupTargetCalendar(targetCalendarName);
+    var targetCalendar = setupTargetCalendar(targetCalendarName, colorId);
     targetCalendarId = targetCalendar.id;
-    Logger.log("Working on calendar: " + targetCalendarId);
+    Logger.log("Working on calendar: " + targetCalendarId + colorId !== undefined ? " with colorId: " + colorId : "");
     
     //------------------------ Parse existing events --------------------------
     if(addEventsToCalendar || modifyExistingEvents || removeEventsFromCalendar){
@@ -201,7 +204,7 @@ function startSync(){
         }, defaultMaxRetries);
       
       vevents.forEach(function(e){
-        processEvent(e, calendarTz);
+        processEvent(e, calendarTz, colorId);
       });
 
       Logger.log("Done processing events");
